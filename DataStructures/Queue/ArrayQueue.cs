@@ -9,10 +9,7 @@ namespace DataStructures.Queue
         private int _rear;
         private readonly int _max;
         private int _count;
-        private bool _empty
-        {
-            get { return _count == 0; }
-        }
+        private bool Empty => _count == 0;
 
         public ArrayQueue(int size)
         {
@@ -37,7 +34,7 @@ namespace DataStructures.Queue
 
         public bool TryDequeue(out T value)
         {
-            if (_empty)
+            if (Empty)
             {
                 value = default(T);
                 return false;
@@ -49,22 +46,23 @@ namespace DataStructures.Queue
 
         public T Dequeue()
         {
-            if (_empty)
+            if (Empty)
             {
                 throw new InvalidOperationException("Queue is empty");
             }
 
             return InnerDequeue();
         }
+
         public T Peek()
         {
-            if (_empty) throw new InvalidOperationException("Queue is empty");
+            if (Empty) throw new InvalidOperationException("Queue is empty");
             return _array[_front];
         }
 
         private T InnerDequeue()
         {
-            var result = _array[_front];
+            T result = _array[_front];
             _front = (_front + 1) % _max;
             _count--;
             return result;

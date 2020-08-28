@@ -5,9 +5,7 @@ namespace DataStructures.Stack
     public class LinkedListStack<T>
     {
         private int _count;
-        private bool _empty {
-            get { return _count == 0; }
-        }
+        private bool Empty => _count == 0;
         private Node _peak;
 
         public LinkedListStack()
@@ -17,25 +15,25 @@ namespace DataStructures.Stack
 
         public void Push(T item)
         {
-            _peak = _empty ? new Node(item) : new Node(item, _peak);
+            _peak = Empty ? new Node(item) : new Node(item, _peak);
             _count++;
         }
 
         public T Pop()
         {
-            if (_empty) throw new InvalidOperationException("Stack is empty");
+            if (Empty) throw new InvalidOperationException("Stack is empty");
             return InnerPop();
         }
 
         public T Peek()
         {
-            if (_empty) throw new InvalidOperationException("Stack is empty");
+            if (Empty) throw new InvalidOperationException("Stack is empty");
             return _peak.Value;
         }
 
         public bool TryPop(out T value)
         {
-            if (_empty)
+            if (Empty)
             {
                 value = default(T);
                 return false;
@@ -46,10 +44,10 @@ namespace DataStructures.Stack
 
         private T InnerPop()
         {
-            var popedItem = _peak.Value;
+            T topItem = _peak.Value;
             _peak = _peak.OneBelow;
             _count--;
-            return popedItem;
+            return topItem;
         }
 
         private class Node
